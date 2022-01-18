@@ -9,3 +9,19 @@
   dnf:
     name: "{{ rpms }}"
     state: present
+
+- name: install container tools
+  command: '/usr/bin/dnf module install container-tools -y'
+
+- name: enable codeready-builder-for-rhel-8-x86_64-rpms repository
+  command: "/usr/bin/subscription-manager repos --enable=codeready-builder-for-rhel-8-x86_64-rpms"
+
+- name: import epel key
+  rpm_key:
+    state: present
+    key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8
+
+- name: enable epel repository
+  dnf:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    state: present

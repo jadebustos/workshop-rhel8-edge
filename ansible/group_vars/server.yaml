@@ -1,9 +1,25 @@
 ---
 
-rpms: ['cockpit', 'cockpit-composer', 'composer-cli', 'osbuild-composer', 'jq', 'golang', 'chrony']
+rpms: ['cockpit', 'cockpit-composer', 'composer-cli', 'osbuild-composer', 'jq', 'golang', 'chrony', 'dnf-utils']
 
 enabled_services: ['chronyd', 'cockpit.socket', 'osbuild-composer']
+
+enabled_ports: ['5000/tcp']
 
 user: 'demo'
 # hased password creation: openssl passwd -6 rheldemo
 user_password: '$6$EtI62ErLmqVsnfAL$sGqVi/qZgVYP9I5LJkRKYZYT/euILUVjyP.dC6Pyw.aH7CDcPsHyYN0BXBLmR40FLw3Ptlu/oxO0PltT6yOdD1'
+
+demo_dir: 'demo'
+
+# kickstart
+
+# english
+#lang: 'en_US.UTF-8'
+#keyboard: 'us'
+#timezone: 'UTC'
+
+# spanish
+lang: 'en_US.UTF-8'
+keyboard: 'us'
+timezone: 'UTC'

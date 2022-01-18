@@ -1,0 +1,19 @@
+---
+
+- name: demo directory creation
+  file:
+    path: "/home/{{ user }}/{{ demo_dir }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    setype: user_home_t
+    mode: '0755'
+
+- name: kickstart
+  template:
+    src: edge.ks.j2
+    dest: "/home/{{ user }}/{{ demo_dir }}/edge.ks"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    setype: user_home_t
+    mode: 0640
