@@ -1,0 +1,11 @@
+---
+
+- name: update packages
+  dnf:
+    name: '*'
+    state: latest
+    
+- name: install software
+  dnf:
+    name: "{{ rpms }}"
+    state: present
