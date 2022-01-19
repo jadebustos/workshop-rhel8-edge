@@ -5,8 +5,8 @@ As we have one image created we are going to upgrade that image to illustrate ho
 We need the **ostree-commit** for the image we want to upgrade:
 
 ```console
-[root@rhel8edge edgeimage]# tar xf *.tar
-[root@rhel8edge edgeimage]# jq '.' compose.json 
+[root@rhel8edge edgeimage]# tar xf *.tar -C /var/www/html/ostree
+[root@rhel8edge edgeimage]# jq '.' /var/www/html/ostree/compose.json 
 {
   "ref": "rhel/8/x86_64/edge",
   "ostree-n-metadata-total": 10313,
@@ -58,5 +58,9 @@ After the creation of the new image we can see the two versions:
 
 ![](imgs/cockpit-update-blueprint-08.png)
 
-> ![HOMEWORK](icons/homework-icon.png) Download the new image and check that the **strace** RPM package is included.
+> ![HOMEWORK](icons/homework-icon.png) Download the new image and check that the **strace** RPM package is included in the upgraded image. 
+
+> ![INFORMATION](icons/information-icon.png) If you want to deploy this image later remove the previous one before extracting that one in **/var/www/html/ostree**.
+
+
 

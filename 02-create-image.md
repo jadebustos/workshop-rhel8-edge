@@ -92,8 +92,8 @@ Download the image:
 The image is a tar file so we can expand the image and check the metadata:
 
 ```console
-[root@rhel8edge edgeimage]# tar xf *.tar
-[root@rhel8edge edgeimage]# jq '.' compose.json 
+[root@rhel8edge edgeimage]# tar xf *.tar -C /var/www/html/ostree
+[root@rhel8edge edgeimage]# jq '.' /var/www/html/ostree/compose.json 
 {
   "ref": "rhel/8/x86_64/edge",
   "ostree-n-metadata-total": 10313,
@@ -110,10 +110,15 @@ The image is a tar file so we can expand the image and check the metadata:
 }
 [root@rhel8edge edgeimage]#
 ```
+
+> ![IMPORTANT](icons/important-icon.png) It is important to extract the image in the above path due to we will perform and installation from that image and the system is configured to export it.
+
+> ![HOMEWORK](icons/homework-icon.png) It would be nice to explore what you have just extracted ;-).
+
 **ref** can be used to get the rpm intalled in the image:
 
 ```console
-[root@rhel8edge edgeimage]# rpm-ostree db list rhel/8/x86_64/edge --repo=repo
+[root@rhel8edge edgeimage]# rpm-ostree db list rhel/8/x86_64/edge --repo=/var/www/html/ostree/repo
 ostree commit: rhel/8/x86_64/edge (073931ab9c68a19b9cf655cdf01ccd427d269d6b9d8d70dd5989d690d90daf5f)
  ModemManager-1.10.8-4.el8.x86_64
  ModemManager-glib-1.10.8-4.el8.x86_64
