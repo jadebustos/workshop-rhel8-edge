@@ -3,3 +3,18 @@
 rpms: ['lorax']
 
 rhel_iso: '/opt/isos/rhel-8.5-x86_64-dvd.iso'
+
+demo_dir: 'demo'
+tmp_dir: '/tmp/rheledge'
+
+# kickstart
+
+# english
+#lang: 'en_US.UTF-8'
+#keyboard: 'us'
+#timezone: 'UTC'
+
+# spanish
+lang: 'es_ES.UTF-8'
+keyboard: 'es'
+timezone: 'UTC'
