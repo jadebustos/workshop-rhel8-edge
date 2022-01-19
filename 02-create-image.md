@@ -111,7 +111,7 @@ The image is a tar file so we can expand the image and check the metadata:
 [root@rhel8edge edgeimage]#
 ```
 
-> ![IMPORTANT](icons/important-icon.png) It is important to extract the image in the above path due to we will perform and installation from that image and the system is configured to export it.
+> ![IMPORTANT](icons/important-icon.png) It is important to extract the image in the above path due to we will perform and installation from that image and the system is already configured to export it.
 
 > ![HOMEWORK](icons/homework-icon.png) It would be nice to explore what you have just extracted ;-).
 
@@ -133,3 +133,5 @@ ostree commit: rhel/8/x86_64/edge (073931ab9c68a19b9cf655cdf01ccd427d269d6b9d8d7
  basesystem-11-5.el8.noarch
 ...
 ```
+
+> ![HOMEWORK](icons/homework-icon.png) To create the image the **Image builder** feature from RHEL 8 is used. [A lot of things](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html-single/composing_a_customized_rhel_system_image/index) can be done apart from install packages.
