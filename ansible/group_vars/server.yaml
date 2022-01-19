@@ -23,3 +23,5 @@ demo_dir: 'demo'
 lang: 'en_US.UTF-8'
 keyboard: 'us'
 timezone: 'UTC'
+
+html_msg: 'RHEL for Edge'

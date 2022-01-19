@@ -1,0 +1,39 @@
+---
+
+- name: install software to create containers
+  dnf:
+    name: ['cowsay', 'figlet']
+    state: present
+
+- name: build container image for application
+  command: "/usr/bin/buildah from registry.access.redhat.com/ubi8/ubi:latest"
+  register: buildah
+
+- name: install httpd in container image
+  command: "/usr/bin/buildah run {{ buildah.output }} -- dnf install httpd -y"
+
+- name: create index.html for the application
+  command: "/usr/bin/echo {{ html_msg }} | /usr/bin/figlet > /tmp/index.html"
+
+- name: copy index html to the container image
+  command: "/usr/bin/buildah copy {{ buildah.output }} /tmp/index.html /var/www/html/index.html"
+
+- name: configure httpd in container image
+  command: "/usr/bin/buildah config --cmd '/usr/sbin/httpd -D FOREGROUND' {{ buildah.output }}"
+
+- name: configure httpd port in container image
+  command: "/usr/bin/buildah config --port 80 {{ buildah.output }}"
+
+- name: commit container image
+  command: "/usr/bin/buildah commit {{ buildah.output }} {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v1"
+
+- name: push container image
+  command: "/usr/bin/buildah push {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v1"
+
+- name: tag the image as prod
+  command: "/usr/bin/buildah tag {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v1 {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:prod"
+
+- name: push the tagged image
+  command: "/usr/bin/buildah push {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:prod"
+
+

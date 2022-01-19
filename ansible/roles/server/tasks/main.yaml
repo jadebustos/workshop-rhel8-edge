@@ -5,4 +5,5 @@
 #- include_tasks: 03-users.yaml
 #- include_tasks: 04-demo.yaml
 #- include_tasks: 05-registry.yaml
+- include_tasks: 06-containers.yaml
 #- include_tasks: 99-firewalld.yaml
