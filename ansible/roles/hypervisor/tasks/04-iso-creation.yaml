@@ -1,6 +1,0 @@
----
-
-# xorriso : FAILURE : Image size 5402824s exceeds free space on media 5045526s
-# https://access.redhat.com/solutions/5270191
-- name: boot iso creation
-  command: "/usr/sbin/mkksiso -c "inst.text console=ttyS0" /home/{{ ansible_user }}/{{ demo_dir }}/edge.ks {{ rhel_iso }} {{ boot_iso }}"

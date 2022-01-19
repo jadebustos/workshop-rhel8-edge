@@ -10,15 +10,6 @@
     mode: '0755'
   become: yes
 
-#- name: demo directory creation
-#  file:
-#    path: "/home/{{ ansible_user }}/{{ demo_dir }}"
-#    state: directory
-#    owner: "{{ ansible_user }}"
-#    group: "{{ ansible_user }}"
-#    setype: user_home_t
-#    mode: '0755'
-
 - name: kickstart
   template:
     src: edge.ks.j2
@@ -27,6 +18,10 @@
     group: root
     setype: tmp_t
     mode: 0640
+  become: true
+
+- name: rheledge deployment iso creation
+  command: "/usr/sbin/mkksiso -c 'inst.text ' {{ tmp_dir }}/edge.ks {{ rhel_iso }} {{ boot_iso }}"
   become: true
 
 

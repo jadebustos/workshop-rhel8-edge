@@ -12,15 +12,3 @@ user: 'demo'
 user_password: '$6$EtI62ErLmqVsnfAL$sGqVi/qZgVYP9I5LJkRKYZYT/euILUVjyP.dC6Pyw.aH7CDcPsHyYN0BXBLmR40FLw3Ptlu/oxO0PltT6yOdD1'
 
 demo_dir: 'demo'
-
-# kickstart
-
-# english
-#lang: 'en_US.UTF-8'
-#keyboard: 'us'
-#timezone: 'UTC'
-
-# spanish
-lang: 'en_US.UTF-8'
-keyboard: 'us'
-timezone: 'UTC'
