@@ -23,6 +23,3 @@ demo_dir: 'demo'
 lang: 'en_US.UTF-8'
 keyboard: 'us'
 timezone: 'UTC'
-
-html_msg: 'RHEL for Edge'
-html_msg2: 'Podman auto-update is awesome!'

@@ -1,6 +1,6 @@
 ---
 
-- include_tasks: 01-software.yaml
+#- include_tasks: 01-software.yaml
 #- include_tasks: 02-services.yaml
 #- include_tasks: 03-users.yaml
 #- include_tasks: 04-demo.yaml

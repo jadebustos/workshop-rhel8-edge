@@ -11,7 +11,6 @@
 
 - name: deploy registry
   command: '/usr/bin/podman run --privileged -d --name registry -p 5000:5000 -v /var/lib/registry:/var/lib/registry:Z --restart=always docker.io/library/registry:2'
-  register: registry
 
 - name: stop running containers
   command: "/usr/bin/podman stop --all"

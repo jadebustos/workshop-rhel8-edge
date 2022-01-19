@@ -17,3 +17,15 @@
     group: "{{ user }}"
     setype: user_home_t
     mode: 0640
+
+- name: copy demo files
+  copy:
+    src: "{{ item }}"
+    dest: "/home/{{ user }}/{{ demo_dir }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    setype: user_home_t
+    mode: '0755'
+  with_items:
+    - "index.html"
+    - "index2.html"

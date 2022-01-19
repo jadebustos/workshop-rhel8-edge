@@ -1,56 +1,45 @@
 ---
 
-- name: install software to create containers
-  dnf:
-    name: ['cowsay', 'figlet']
-    state: present
-
 - name: build container image for application
-  command: "/usr/bin/buildah from registry.access.redhat.com/ubi8/ubi:latest"
+  command: '/usr/bin/buildah from registry.access.redhat.com/ubi8/ubi:latest'
   register: buildah
 
 - name: install httpd in container image
-  command: "/usr/bin/buildah run {{ buildah.output }} -- dnf install httpd -y"
-
-- name: create index.html for the application
-  command: "/usr/bin/echo {{ html_msg }} | /usr/bin/figlet > /tmp/index.html"
+  command: "/usr/bin/buildah run {{ buildah.stdout }} -- dnf install httpd -y"
 
 - name: copy index html to the container image
-  command: "/usr/bin/buildah copy {{ buildah.output }} /tmp/index.html /var/www/html/index.html"
+  command: "/usr/bin/buildah copy {{ buildah.stdout }} /home/{{ user }}/{{ demo_dir }}/index.html /var/www/html/index.html"
 
 - name: configure httpd in container image
-  command: "/usr/bin/buildah config --cmd '/usr/sbin/httpd -D FOREGROUND' {{ buildah.output }}"
+  command: "/usr/bin/buildah config --cmd '/usr/sbin/httpd -D FOREGROUND' {{ buildah.stdout }}"
 
 - name: configure httpd port in container image
-  command: "/usr/bin/buildah config --port 80 {{ buildah.output }}"
+  command: "/usr/bin/buildah config --port 80 {{ buildah.stdout }}"
 
 - name: commit container image
-  command: "/usr/bin/buildah commit {{ buildah.output }} {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v1"
+  command: "/usr/bin/buildah commit {{ buildah.stdout }} {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v1"
 
 - name: push container image
-  command: "/usr/bin/buildah push {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v1"
+  command: "/usr/bin/buildah push --tls-verify=false {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v1"
 
 - name: tag the image as prod
   command: "/usr/bin/buildah tag {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v1 {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:prod"
 
 - name: push the tagged image
-  command: "/usr/bin/buildah push {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:prod"
+  command: "/usr/bin/buildah push --tls-verify=false {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:prod"
 
 - name: create application v2
   command: "/usr/bin/buildah from {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v1"
   register: buildah2
 
-- name: create index.html for the application v2
-  command: "cowthink -f tux {{ html_msg2 }} >> /tmp/index.html"
-
 - name: copy new index html to the container image for application v2
-  command: "/usr/bin/buildah copy {{ buildah2.output }} /tmp/index.html /var/www/html/index.html"
+  command: "/usr/bin/buildah copy {{ buildah2.stdout }} /home/{{ user }}/{{ demo_dir }}/index2.html /var/www/html/index.html"
 
 - name: commit container image for application v2
-  command: "/usr/bin/buildah commit {{ buildah2.output }} {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v2"
+  command: "/usr/bin/buildah commit {{ buildah2.stdout }} {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v2"
 
 - name: push container image for application v2
-  command: "/usr/bin/buildah push {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v2"
+  command: "/usr/bin/buildah push --tls-verify=false {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v2"
 
 
 
