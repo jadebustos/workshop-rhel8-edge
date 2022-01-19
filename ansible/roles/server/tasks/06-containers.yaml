@@ -36,4 +36,23 @@
 - name: push the tagged image
   command: "/usr/bin/buildah push {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:prod"
 
+- name: create application v2
+  command: "/usr/bin/buildah from {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v1"
+  register: buildah2
+
+- name: create index.html for the application v2
+  command: "cowthink -f tux {{ html_msg2 }} >> /tmp/index.html"
+
+- name: copy new index html to the container image for application v2
+  command: "/usr/bin/buildah copy {{ buildah2.output }} /tmp/index.html /var/www/html/index.html"
+
+- name: commit container image for application v2
+  command: "/usr/bin/buildah commit {{ buildah2.output }} {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v2"
+
+- name: push container image for application v2
+  command: "/usr/bin/buildah push {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v2"
+
+
+
+
 
