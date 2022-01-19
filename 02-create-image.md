@@ -1,6 +1,6 @@
 # Creating the RHEL for edge image
 
-## Using cockpit to create the image
+## Using Cockpit to create the image
 
 Log into your RHEL server at 9090 port using the root credentials, go to **Image Builder** and create a new blueprint:
 
@@ -56,7 +56,7 @@ edgeserver
 
 > ![IMPORTANT](icons/important-icon.png) Blueprints can be created using **composer-cli**.
 
-> ![IMPORTANT](icons/homework-icon.png) Investigate how to use **composer-cli** to create bluprints.
+> ![HOMEWORK](icons/homework-icon.png) Investigate how to use **composer-cli** to create bluprints.
 
 We can check what kind of images can be created:
 

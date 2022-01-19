@@ -24,18 +24,39 @@ We need the **ostree-commit** for the image we want to upgrade:
 [root@rhel8edge edgeimage]#
 ```
 
-## Using cockpit to upgrade an image
+## Using Cockpit to upgrade an image
+
+Log into your RHEL server at 9090 port using the root credentials, go to **Image Builder**:
 
 ![](imgs/cockpit-update-blueprint-01.png)
 
+Go to the **edgeserver** image:
+
 ![](imgs/cockpit-update-blueprint-02.png)
+
+We are going to add a new package, search for the **strace** RPM package. Add the **strace** RPM package to the image using the **+** symbol:
 
 ![](imgs/cockpit-update-blueprint-03.png)
 
+Use the **Commit** button to confirm the modifications:
+
 ![](imgs/cockpit-update-blueprint-04.png)
+
+To create the image click on the **Create image**:
 
 ![](imgs/cockpit-update-blueprint-05.png)
 
+Now in the **Parent commit** paste the **ostree-commit** value you get from the _jq '.' compose.json_ output. Now click on **Create** to start to build the upgrade image:
+
 ![](imgs/cockpit-update-blueprint-06.png)
 
+It will take several minutes to create the new image version. Go to **edgeserver -> Images** to see the image creation status:
+
 ![](imgs/cockpit-update-blueprint-07.png)
+
+After the creation of the new image we can see the two versions:
+
+![](imgs/cockpit-update-blueprint-08.png)
+
+> ![HOMEWORK](icons/homework-icon.png) Download the new image and check that the **strace** RPM package is included.
+
