@@ -10,9 +10,9 @@ Clone this repository:
 
 Deploy a RHEL 8 server and perform the following:
 
-* Register the server or configure the **BaseOS** and **AppStream** repos.
+* Register the server and configure the **BaseOS** and **AppStream** repos.
 * Configure root user to be used with ansible.
-* Edit the [inventory file](ansible/hosts) and under inventory group **rhelserver** replace **192.168.1.222* by your server's IP.
+* Edit the [inventory file](ansible/hosts) and under inventory group **rhelserver** replace **192.168.1.222** by your server's IP.
 * Configure the server and from your ansible controller node:
 
   ```console
