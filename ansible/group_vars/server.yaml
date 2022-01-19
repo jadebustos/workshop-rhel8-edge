@@ -1,10 +1,11 @@
 ---
 
-rpms: ['cockpit', 'cockpit-composer', 'composer-cli', 'osbuild-composer', 'jq', 'golang', 'chrony', 'dnf-utils']
+rpms: ['cockpit', 'cockpit-composer', 'composer-cli', 'osbuild-composer', 'jq', 'golang', 'chrony', 'dnf-utils', 'httpd']
 
-enabled_services: ['chronyd', 'cockpit.socket', 'osbuild-composer']
+systemd_services: ['chronyd', 'cockpit.socket', 'osbuild-composer']
 
 enabled_ports: ['5000/tcp']
+enabled_services: ['http']
 
 user: 'demo'
 # hased password creation: openssl passwd -6 rheldemo

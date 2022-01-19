@@ -4,6 +4,16 @@
   firewalld:
     port: "{{ item }}"
     permanent: yes
+    immediate: yes
     state: enabled
   with_items:
     - "{{ enabled_ports }}"
+
+- name: open firewall ports (services)
+  firewalld:
+    service: "{{ item }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  with_items:
+    - "{{ enabled_services }}"

@@ -6,6 +6,7 @@ rhel_iso: '/opt/isos/rhel-8.5-x86_64-dvd.iso'
 
 demo_dir: 'demo'
 tmp_dir: '/tmp/rheledge'
+boot_iso: "{{ tmp_dir }}/rhelbootiso.iso"
 
 # kickstart
 
