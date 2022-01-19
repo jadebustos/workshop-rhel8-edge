@@ -1,0 +1,5 @@
+---
+
+rpms: ['lorax']
+
+rhel_iso: '/opt/isos/rhel-8.5-x86_64-dvd.iso'
