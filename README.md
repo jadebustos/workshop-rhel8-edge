@@ -28,3 +28,4 @@ To begin the workshop follow these steps:
 2. [Create a RHEL for Edge image](02-create-image.md)
 3. [How to upgrade a RHEL for Edge Image](03-image-upgrade.md)
 4. [Prepare the hypervisor](04-requirements-hypervisor.md)
+5. [Deploy a RHEL for Edge server](05-deploying-rhel-for-edge.md)

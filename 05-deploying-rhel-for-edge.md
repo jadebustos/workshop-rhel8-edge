@@ -14,6 +14,6 @@ This playbook will deploy a virtual machine using the RHEL for Edge image we hav
 >
 > ![BOOT](imgs/rheledgeboot.png)
 
-> ![NOTE](icons/note-icon.png) Once the deployment has finished you can use ssh to connect to the RHEL for Edge server using the ip you configured and the user **core** with password **edge**.
+> ![NOTE](icons/note-icon.png) Once the deployment has finished you can use ssh to connect to the RHEL for Edge server using the ip you configured together with the user **core** with password **edge**.
 
 > ![INFORMATION](icons/information-icon.png) The boot iso we created can only be used to deploy one server due to network configuration is hardcoded inside the kickstart for the shake of simplicity. DHCP configuration and/or cloud-init could be used to create an iso which could be used to deploy several servers (but this is not the purpose of this workshop).
