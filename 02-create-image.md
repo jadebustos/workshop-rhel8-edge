@@ -84,6 +84,8 @@ Download the image:
 ```console
 [root@rhel8edge ~]# mkdir edgeimages
 [root@rhel8edge ~]# cd edgeimages
+[root@rhel8edge edgeimages]# composer-cli compose status
+4e9a0fe8-eca4-4de8-8604-21b5c83237c2 FINISHED Tue Jan 18 15:09:59 2022 edgeserver      0.0.1 edge-commit      2147483648
 [root@rhel8edge edgeimages]# composer-cli compose image 4e9a0fe8-eca4-4de8-8604-21b5c83237c2
 4e9a0fe8-eca4-4de8-8604-21b5c83237c2-commit.tar: 780.69 MB    
 [root@rhel8edge edgeimages]# 

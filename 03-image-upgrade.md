@@ -30,13 +30,15 @@ Log into your RHEL server at 9090 port using the root credentials, go to **Image
 
 ![](imgs/cockpit-update-blueprint-01.png)
 
-Go to the **edgeserver** image:
+Go to the **edgeserver** image and click in **Edit packages**:
 
 ![](imgs/cockpit-update-blueprint-02.png)
 
 We are going to add a new package, search for the **strace** RPM package. Add the **strace** RPM package to the image using the **+** symbol:
 
 ![](imgs/cockpit-update-blueprint-03.png)
+
+> ![HOMEWORK](icons/homework-icon.png) Search the **net-tools** RPM package and include it in the upgraded image. 
 
 Use the **Commit** button to confirm the modifications:
 
