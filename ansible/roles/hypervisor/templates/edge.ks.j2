@@ -95,7 +95,7 @@ cat > /etc/containers/registries.conf <<EOF
 [registries.search]
 registries = ['registry.access.redhat.com', 'registry.redhat.io', 'docker.io']
 [registries.insecure]
-registries = ['{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000']
+registries = ['{{ groups['rhelserver'][0] }}:5000']
 [registries.block]
 registries = []
 EOF
@@ -118,7 +118,7 @@ mkdir -p /var/home/core/.config/systemd/user/multi-user.target.wants
 # define listener for socket activation
 cat << EOF > /var/home/core/.config/systemd/user/container-httpd-proxy.socket
 [Socket]
-ListenStream=$VIP_IP:8080
+ListenStream={{ rheledge_ip }}:8080
 FreeBind=true
 
 [Install]
@@ -157,7 +157,7 @@ Environment=PODMAN_SYSTEMD_UNIT=%n
 Restart=on-failure
 TimeoutStopSec=70
 ExecStartPre=/bin/rm -f %t/container-httpd.pid %t/container-httpd.ctr-id
-ExecStart=/usr/bin/podman run --conmon-pidfile %t/container-httpd.pid --cidfile %t/container-httpd.ctr-id --cgroups=no-conmon --replace -d --label io.containers.autoupdate=image --name httpd -p 127.0.0.1:8080:80 ${HOSTIP}:5000/httpd:prod
+ExecStart=/usr/bin/podman run --conmon-pidfile %t/container-httpd.pid --cidfile %t/container-httpd.ctr-id --cgroups=no-conmon --replace -d --label io.containers.autoupdate=image --name httpd -p 127.0.0.1:8080:80 {{ groups['rhelserver'][0] }}:5000/httpd:prod
 ExecStartPost=/bin/sleep 1
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/container-httpd.ctr-id -t 10
 ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/container-httpd.ctr-id
@@ -216,7 +216,7 @@ EOF
 cat > /var/home/core/.config/systemd/user/pre-pull-container-image.service <<EOF
 [Service]
 Type=oneshot
-ExecStart=podman pull $HOSTIP:5000/httpd:prod
+ExecStart=podman pull {{ groups['rhelserver'][0] }}:5000/httpd:prod
 
 [Install]
 WantedBy=multi-user.target default.target
@@ -247,6 +247,10 @@ WantedBy=multi-user.target default.target
 EOF
 
 systemctl enable enable-linger.service
+
+# open the port to access the application
+/usr/bin/firewall-cmd --permanent --add-port=8080/tcp
+
 %end
 
 %post
