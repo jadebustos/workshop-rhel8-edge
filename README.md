@@ -22,10 +22,11 @@ You will need the following:
 
 Ansible playbooks will be used to deploy and configure all the infrastructure.
 
-To begin the workshop follow these steps:
+To enjoy the workshop follow these steps:
 
 1. [Prepare the RHEL server](01-requirements-rhel-server.md)
 2. [Create a RHEL for Edge image](02-create-image.md)
 3. [How to upgrade a RHEL for Edge Image](03-image-upgrade.md)
 4. [Prepare the hypervisor](04-requirements-hypervisor.md)
 5. [Deploy a RHEL for Edge server](05-deploying-rhel-for-edge.md)
+6. [Deploy a serverless containerized application on top of the RHEL for Edge server](06-deploying-serverless-application.md)
