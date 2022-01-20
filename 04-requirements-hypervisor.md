@@ -4,7 +4,7 @@ We are going to configure now the hypervisor to deploy RHEL for the Edge in a vi
 
 A Fedora/RHEL/CentOS computer which with the capability to create Virtual Machines using KVM is needed.
 
-## Hypervisor configuration
+## Hypervisor configuration (KVM under RHEL family)
 
 Follow these stesp:
 
@@ -15,7 +15,6 @@ Follow these stesp:
   ```
 * SSH must be running and one user must be configured with passwordless sudo to be used by ansible.
 * Edit the [inventory file](ansible/hosts) and under inventory group **hypervisor** replace **192.168.1.200** by your hypervisor's IP. Configure the **ansible_user** accordingly, as well.
-* The **/tmp** filesystem must have at least twice of RHEL iso size free.
 * Edit the [group_vars/hypervisor.yaml](ansible/group_vars/hypervisor.yaml) file to configure the network for the RHEL for Edge server that will be deployed in the hypervisor using the RHEL for Edge image you have just created:
   ```yaml
   rheledge_hostname: 'rheledge.acme.es'
@@ -24,17 +23,38 @@ Follow these stesp:
   rheledge_gw: '192.168.1.1'
   rheledge_dns: '8.8.8.8'
   ```
+* The **/tmp** filesystem must have at least twice of RHEL iso size free.
 * On your ansible controller node execute:
   ```console
   $ ansible-playbook -i hosts -l hypervisor prerequisites_hypervisor.yaml
   ```
 
-  This playbook will deploy a virtual machine using the RHEL for Edge image we have created.
+The hypervisor will be configured and a boot iso is created which will be used to deploy a Virtual Machine using the RHEL for Edge image.
 
-> ![IMPORTANT](icons/important-icon.png) If you get the following error **xorriso : FAILURE : Image size XXXXXXXXs exceeds free space on media YYYYYYYYs** check the free space in the **/tmp** filesystem. You will need to have at least twice of the RHEL 8 iso size free.
+## Hypervisor configuration (other hypervisors)
 
-> ![TIP](icons/tip-icon.png) If we want to speed up the deployment we can connect to the virtual machine console and select the **Install Red Hat Enterprise Linux 8.5**. If not before deploying the server the iso will be checked and this will take more time.
->
-> ![BOOT](imgs/rheledgeboot.png)
+If you are not using a RHEL family based hypervisor, such Debian or Suse you will need to adapt the playbooks or follow the steps manually.
 
-Once the deployment has finished you can use ssh to connect to the RHEL for Edge server using the ip you configured and the user **core** with password **edge**.
+Maybe the best solution in this case, even for those using VMware or Virtual Box to deploy VMs, is:
+
+* Use the RHEL server machine to create the boot iso.
+* Download the boot iso from the RHEL server and use it to create the RHEL for Edge Virtual Machine.
+
+If you decide to do the above:
+
+* Edit the [inventory file](ansible/hosts) and under inventory group **hypervisor** replace **192.168.1.200** by your RHEL server's IP. Configure the **ansible_user** accordingly, as well.
+* Edit the [group_vars/hypervisor.yaml](ansible/group_vars/hypervisor.yaml) file to configure the network for the RHEL for Edge server that will be deployed in the hypervisor using the RHEL for Edge image you have just created:
+  ```yaml
+  rheledge_hostname: 'rheledge.acme.es'
+  rheledge_ip: '192.168.1.134'
+  rheledge_netmask: '255.255.255.0'
+  rheledge_gw: '192.168.1.1'
+  rheledge_dns: '8.8.8.8'
+  ```
+* A RHEL 8 iso must be uploaded to the RHEL server.
+* The **/tmp** filesystem must have at least twice of RHEL iso size free.
+* On your ansible controller node execute:
+  ```console
+  $ ansible-playbook -i hosts -l hypervisor prerequisites_hypervisor.yaml
+  ```
+    > ![TIP](icons/tip-icon.png) You can also configure the RHEL server as your ansible controller node. Just install **ansible** and configure users for ansible connections.
