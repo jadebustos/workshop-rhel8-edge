@@ -2,8 +2,6 @@
 
 An Operating System with no application is useless.
 
-We are going to deploy a containerized application on top of the RHEL for Edge.
-
 ## Checking the RHEL for Edge server
 
 When we deployed the RHEL for Edge we also deployed a containerized web application. This application is published in a non-secure registry in the RHEL 8 Server. If you connect to that server:
@@ -56,7 +54,7 @@ So if we use a browser to browse the RHEL for Edge at 8080 port:
 
 ![APPv1](imgs/appv1.png)
 
-If we check the containers now we can see that there is one container running:
+If we check the containers that are running now we can see that there is one container running:
 
 ```console
 [core@rheledge ~]$ podman container list
@@ -89,11 +87,11 @@ Several systemd units were defined for the **core** user:
 * **/var/home/core/.config/systemd/user/pre-pull-container-image.service** this systemd unit downloads the container image (192.168.1.222:5000/httpd:prod) from the unsecured registy at RHEL 8 Server.
 * **/var/home/core/.config/systemd/user/container-httpd-proxy.socket** this systemd unit opens a socket in RHEL for Edge server at port **8080**. This will be used to access the containerized application with a bit more configuration.
 * **/var/home/core/.config/systemd/user/container-httpd-proxy.service** this systemd unit it is used to forward the socket opened as stream in the systemd unit **container-httpd-proxy.socket** to **localhost:8080**.
-  > ![INFORMATION](icons/information-icon.png this systemd unit uses **systemd-socket-proxyd** which provide socket activation support for services that do not natively support socket activation. So we can use it to activate the systemd unit **container-httpd.service**.
+  > ![INFORMATION](icons/information-icon.png) this systemd unit uses **systemd-socket-proxyd** which provide socket activation support for services that do not natively support socket activation. So we can use it to activate the systemd unit **container-httpd.service**.
 * **/var/home/core/.config/systemd/user/container-httpd.service** this systemd unit starts the containerized image binding the **localhost:8080** to the container port 80.
 
 
-
+**TO BE CONTINUED**
 
 * **/var/home/core/.config/systemd/user/podman-auto-update.service**
 * **/var/home/core/.config/systemd/user/podman-auto-update.timer**
