@@ -8,14 +8,21 @@ demo_dir: 'demo'
 tmp_dir: '/tmp/rheledge'
 boot_iso: "{{ tmp_dir }}/rheledgebootiso.iso"
 
+# change this settings to fit your environment
+rheledge_hostname: 'rheledge.acme.es'
+rheledge_ip: '192.168.1.134'
+rheledge_netmask: '255.255.255.0'
+rheledge_gw: '192.168.1.1'
+rheledge_dns: '8.8.8.8'
+
 # kickstart
 
-# english
+# uncomment this settings to configure english settings in the rhel edge server
 #lang: 'en_US.UTF-8'
 #keyboard: 'us'
 #timezone: 'UTC'
 
-# spanish
+# uncomment this settings to configure spanish settings in the rhel edge server
 lang: 'es_ES.UTF-8'
 keyboard: 'es'
 timezone: 'UTC'

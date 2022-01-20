@@ -2,4 +2,3 @@
 
 - include_tasks: 01-software.yaml
 - include_tasks: 02-demo.yaml
-#- include_tasks: 04-iso-creation.yaml
