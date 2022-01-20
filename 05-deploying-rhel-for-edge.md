@@ -3,9 +3,10 @@
 Once we have the hypervisor configured, the RHEL for Edge image and the boot iso we are going to deploy a Virtual Machine using the RHEL for Edge image we have created.
 
 ```console
+$ ansible-playbook -i hosts -l hypervisor deploy_rhel_edge_image.yaml
 ```
 
-This playbook will deploy a virtual machine using the RHEL for Edge image we have created.
+This playbook will deploy a virtual machine using the RHEL for Edge image we have created. The virtual machine will be powered off after finishing deployment. So you will need to start it.
 
 > ![IMPORTANT](icons/important-icon.png) If you get the following error **xorriso : FAILURE : Image size XXXXXXXXs exceeds free space on media YYYYYYYYs** check the free space in the **/tmp** filesystem. You will need to have at least twice of the RHEL 8 iso size free.
 

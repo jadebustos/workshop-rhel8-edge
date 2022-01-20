@@ -15,6 +15,12 @@ rheledge_netmask: '255.255.255.0'
 rheledge_gw: '192.168.1.1'
 rheledge_dns: '8.8.8.8'
 
+rheledge_memory: 8192
+rheledge_vcpus: 2
+rheledge_network: 'bridge=bridge0'
+rheledge_os_variant: 'rhel8.5'
+rheledge_disk_size: '16'
+
 # kickstart
 
 # uncomment this settings to configure english settings in the rhel edge server

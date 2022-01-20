@@ -1,0 +1,5 @@
+---
+
+- name: deploy rhel edge image
+  command: "/usr/bin/virt-install --name {{ rheledge_hostname }} --memory {{ rheledge_memory }} --vcpus {{ rheledge_vcpus }} --network {{ rheledge_network }} --cdrom {{ boot_iso }} --os-variant={{ rheledge_os_variant }} --disk size={{ rheledge_disk_size }} --graphics vnc,keymap=en-us --noautoconsole"
+  become: yes
