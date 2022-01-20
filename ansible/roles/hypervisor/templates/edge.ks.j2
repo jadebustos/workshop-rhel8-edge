@@ -22,8 +22,7 @@ reboot --eject
 # installation will run in text mode
 text
 
-# activate network devices and configure with DHCP
-#network --bootproto=dhcp --noipv6
+# activate network devices and configure with static ip
 network --bootproto=static --ip={{ rheledge_ip }} --netmask={{ rheledge_netmask }} --gateway={{ rheledge_gw }} --nameserver={{ rheledge_dns}} --hostname={{ rheledge_hostname }} --noipv6
 
 # Kickstart requires that we create default user 'core' with sudo
