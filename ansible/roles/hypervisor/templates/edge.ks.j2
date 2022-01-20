@@ -248,9 +248,22 @@ EOF
 
 systemctl enable enable-linger.service
 
-# open the port to access the application
-/usr/bin/firewall-cmd --permanent --add-port=8080/tcp
+# enable 8080 port through the firewall to expose the application
+cat << EOF > /etc/systemd/system/expose-application.service
+[Unit]
+Wants=firewalld.service
+After=firewalld.service
 
+[Service]
+Type=oneshot
+ExecStart=firewall-cmd --permanent --add-port=8080/tcp 
+ExecStartPost=firewall-cmd --reload
+
+[Install]
+WantedBy=multi-user.target default.target
+EOF
+
+systemctl enable expose-application.service
 %end
 
 %post

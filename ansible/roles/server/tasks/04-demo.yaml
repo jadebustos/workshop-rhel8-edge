@@ -20,6 +20,7 @@
   with_items:
     - "index.html"
     - "index2.html"
+    - "Tux.svg.png"
 
 - name: remove welcome site from httpd
   file:

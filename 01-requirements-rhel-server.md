@@ -33,3 +33,5 @@ This server will be used to:
 
 * Create and publish container images.
 * Create and publish the RHEL Edge Images.
+
+This playbook will configure the server, create several containers to be used in the worshop and publish them in an insecure container registry which will be deployed in the server as well.

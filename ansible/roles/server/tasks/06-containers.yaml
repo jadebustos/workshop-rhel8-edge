@@ -35,6 +35,9 @@
 - name: copy new index html to the container image for application v2
   command: "/usr/bin/buildah copy {{ buildah2.stdout }} /home/{{ user }}/{{ demo_dir }}/index2.html /var/www/html/index.html"
 
+- name: copy the tux image to the container image for application v2
+  command: "/usr/bin/buildah copy {{ buildah2.stdout }} /home/{{ user }}/{{ demo_dir }}/Tux.svg.png /var/www/html/Tux.svg.png"
+
 - name: commit container image for application v2
   command: "/usr/bin/buildah commit {{ buildah2.stdout }} {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:5000/httpd:v2"
 
