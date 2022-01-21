@@ -18,6 +18,8 @@ Search for the following packages and add them:
 
 ![](imgs/cockpit-create-blueprint-03.png)
 
+> ![HOMEWORK](icons/homework-icon.png) Search the **net-tools** and **tree** RPM packages and include them in the upgraded image. 
+
 To save the image modifications pushing the **Commit** button:
 
 ![](imgs/cockpit-create-blueprint-04.png)
