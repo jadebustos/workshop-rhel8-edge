@@ -84,14 +84,20 @@ udp6       0      0 ::1:323                 :::*                                
 
 Several systemd units were defined for the **core** user:
 
-* **/var/home/core/.config/systemd/user/pre-pull-container-image.service** this systemd unit downloads the container image (192.168.1.222:5000/httpd:prod) from the unsecured registy at RHEL 8 Server.
+* **/var/home/core/.config/systemd/user/pre-pull-container-image.service** this systemd unit downloads the container image (192.168.1.222:5000/httpd:prod) from the unsecured registry at RHEL 8 Server.
 * **/var/home/core/.config/systemd/user/container-httpd-proxy.socket** this systemd unit opens a socket in RHEL for Edge server at port **8080**. This will be used to access the containerized application with a bit more configuration.
 * **/var/home/core/.config/systemd/user/container-httpd-proxy.service** this systemd unit it is used to forward the socket opened as stream in the systemd unit **container-httpd-proxy.socket** to **localhost:8080**.
   > ![INFORMATION](icons/information-icon.png) this systemd unit uses **systemd-socket-proxyd** which provide socket activation support for services that do not natively support socket activation. So we can use it to activate the systemd unit **container-httpd.service**.
 * **/var/home/core/.config/systemd/user/container-httpd.service** this systemd unit starts the containerized image binding the **localhost:8080** to the container port 80.
 
+Several systemd system units were defined as well:
 
-**TO BE CONTINUED**
+* **/etc/systemd/system/expose-application.service** this systemd unit opens the 8080 port so the application is exposed to the outside world.
+* **/etc/systemd/system/enable-linger.service** this systemd unit enables the linger functionality whichs allow the **core** user to use systemd services without being logged.
 
-* **/var/home/core/.config/systemd/user/podman-auto-update.service**
-* **/var/home/core/.config/systemd/user/podman-auto-update.timer**
+> ![NOTE](icons/note-icon.png) Once the container is started it will be running all the time. The ideal behaviour would be that after some inactivity time it would be stopped and started again when someone were requesting the web service.
+>
+> The systemd version included in RHEL 8.5 (239-51) does not support the `--exit-idle-time` for **systemd-socket-proxyd** command. To use this functionality systemd version 246 or higher is needed.
+
+> Together with the above `StopWhenUnneeded=true` must be added to **container-httpd.service** to stop the container after some inactivity time.
+
