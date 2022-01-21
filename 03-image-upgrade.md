@@ -38,7 +38,7 @@ We are going to add a new package, search for the **strace** RPM package. Add th
 
 ![](imgs/cockpit-update-blueprint-03.png)
 
-> ![HOMEWORK](icons/homework-icon.png) Search the **net-tools** RPM package and include it in the upgraded image. 
+> ![HOMEWORK](icons/homework-icon.png) Search the **net-tools** and **tree** RPM packages and include them in the upgraded image. 
 
 Use the **Commit** button to confirm the modifications:
 

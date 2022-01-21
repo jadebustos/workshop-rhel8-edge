@@ -1,6 +1,6 @@
 # Hypervisor
 
-We are going to configure now the hypervisor to deploy RHEL for the Edge in a virtual machine.
+We are going to configure now the hypervisor to deploy RHEL for Edge in a virtual machine.
 
 A Fedora/RHEL/CentOS computer which with the capability to create Virtual Machines using KVM is needed.
 

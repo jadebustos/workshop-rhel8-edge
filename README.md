@@ -1,4 +1,4 @@
-# Workshop RHEL for the Edge
+# Workshop RHEL for Edge
 
 This workshop is based in [https://github.com/RedHatGov/RFESummit2021](https://github.com/RedHatGov/RFESummit2021).
 
@@ -31,5 +31,6 @@ To enjoy the workshop follow these steps:
 5. [Deploy a RHEL for Edge server](05-deploying-rhel-for-edge.md)
 6. [Deploy a serverless containerized application on top of the RHEL for Edge server](06-deploying-serverless-application.md)
 7. [Upgrading the serverless containerized application](07-upgrading-the-application.md)
+8. [Operating System Upgrade](08-Operating-system-upgrade.md)
 
 [Do you dare?](do-you-dare.md)

@@ -264,6 +264,15 @@ WantedBy=multi-user.target default.target
 EOF
 
 systemctl enable expose-application.service
+
+# sudo configuration for core user
+cat << EOF > /etc/sudoers.d/core
+core    ALL=(ALL) NOPASSWD: ALL
+EOF
+
+/usr/bin/chmod 0644 /etc/sudoers.d/core
+/usr/bin/chown root. /etc/sudoers.d/core
+/usr/bin/chcon -t etc_t /etc/sudoers.d/core
 %end
 
 %post
