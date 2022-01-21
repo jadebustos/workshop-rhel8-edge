@@ -31,7 +31,7 @@ The `podman-auto-update.service` systemd unit is looking for new versions in the
 ```console
 [core@rheledge ~]$ podman container list
 CONTAINER ID  IMAGE                          COMMAND               CREATED         STATUS             PORTS                   NAMES
-1f4cc91a333f  192.168.1.222:5000/httpd:prod  /usr/sbin/httpd -...  12 minutes ago  Up 12 minutes ago  127.0.0.1:8080->80/tcp  httpd       
+eccd21c507e4  192.168.1.222:5000/httpd:prod  /usr/sbin/httpd -...  12 minutes ago  Up 12 minutes ago  127.0.0.1:8080->80/tcp  httpd       
 [core@rheledge ~]$ 
 ```
 
@@ -88,6 +88,10 @@ docker.io/library/registry           2           b8604a3fe854  2 months ago  26.
 [root@rhel8edge ~]# 
 ```
 
+  > ![TIP](icons/tip-icon.png) Check the **IMAGE ID** for the tagged versions before and after tagging de **v2** version as **prod**.
+
+  > ![TIP](icons/tip-icon.png) Before pushing the changes to the registry you can execute **journalctl -xe -f** in the RHEL for Edge server as **core** user to see how is detected the new version for the application and how is pulled and started in real time. If not you can look for the logs later.
+
 Now we push that changes to the registry to be available:
 
 ```console
@@ -117,3 +121,77 @@ CONTAINER ID  IMAGE                          COMMAND               CREATED      
 Now if we browse the application we can see the new version:
 
 ![APPv2](imgs/appv2.png)
+
+> ![INFORMATION](icons/information-icon.png) We can see how the auto update is performed in the logs:
+>
+> ```console
+> [core@rheledge ~]$ journalctl -xe  --no-pager
+> ...
+> Jan 21 19:12:22 rheledge.acme.es systemd[918]: > Started Podman auto-update service.
+> -- Subject: Unit UNIT has finished start-up
+> -- Defined-By: systemd
+> -- Support: https://access.redhat.com/support
+> -- 
+> -- Unit UNIT has finished starting up.
+> -- 
+> -- The start-up result is done.
+> Jan 21 19:12:23 rheledge.acme.es podman[3780]: Trying to pull 192.168.1.222:5000/httpd:prod...
+> Jan 21 19:12:23 rheledge.acme.es podman[3780]: Getting image source signatures
+> Jan 21 19:12:23 rheledge.acme.es podman[3780]: Copying blob sha256:583179957d2da098d8b1ace1e7506cc08bd0826e5922cbc94bbe8d5b9e8a9483
+> Jan 21 19:12:23 rheledge.acme.es podman[3780]: Copying blob sha256:23fdb56daf1572589edba4cca5e03c9eab70b886d1e2a5b6267630decc446277
+> Jan 21 19:12:23 rheledge.acme.es podman[3780]: Copying blob sha256:d4f13fad8263b720483b7787e062e2a6efb88b5344da9d81046e1a48769ef709
+> Jan 21 19:12:23 rheledge.acme.es podman[3780]: Copying blob sha256:54e6edc710db23afbaa268a17f4baa8665eb072b6af77287f240ec535254e839
+> Jan 21 19:12:23 rheledge.acme.es podman[3780]: Copying blob sha256:583179957d2da098d8b1ace1e7506cc08bd0826e5922cbc94bbe8d5b9e8a9483
+> Jan 21 19:12:23 rheledge.acme.es podman[3780]: Copying config sha256:55704dd882b99e6554c8e08a87c2c3de5dea412a07f1da81f0cd78fa27b820e5
+> Jan 21 19:12:23 rheledge.acme.es podman[3780]: Writing manifest to image destination
+> Jan 21 19:12:23 rheledge.acme.es podman[3780]: Storing signatures
+> Jan 21 19:12:23 rheledge.acme.es podman[3780]: UNIT                     CONTAINER             IMAGE                          POLICY      UPDATED
+> Jan 21 19:12:23 rheledge.acme.es podman[3780]: container-httpd.service  eccd21c507e4 (httpd)  192.168.1.222:5000/httpd:prod  registry    true
+> Jan 21 19:12:23 rheledge.acme.es systemd[918]: Stopping container-httpd-proxy.service...
+> -- Subject: Unit UNIT has begun shutting down
+> -- Defined-By: systemd
+> -- Support: https://access.redhat.com/support
+> -- 
+> -- Unit UNIT has begun shutting down.
+> Jan 21 19:12:23 rheledge.acme.es systemd[918]: Stopped container-httpd-proxy.service.
+> -- Subject: Unit UNIT has finished shutting down
+> -- Defined-By: systemd
+> -- Support: https://access.redhat.com/support
+> -- 
+> -- Unit UNIT has begun shutting down.
+> Jan 21 19:12:24 rheledge.acme.es podman[3817]: eccd21c507e402cab36c7c0a94783138e9cf34f71d4d27abb136b18c8bb53c58
+> Jan 21 19:12:24 rheledge.acme.es podman[3892]: eccd21c507e402cab36c7c0a94783138e9cf34f71d4d27abb136b18c8bb53c58
+> Jan 21 19:12:24 rheledge.acme.es systemd[918]: Stopped Podman container-httpd.service.
+> -- Subject: Unit UNIT has finished shutting down
+> -- Defined-By: systemd
+> -- Support: https://access.redhat.com/support
+> -- 
+> -- Unit UNIT has finished shutting down.
+> Jan 21 19:12:24 rheledge.acme.es systemd[918]: Starting Podman container-httpd.service...
+> -- Subject: Unit UNIT has begun start-up
+> -- Defined-By: systemd
+> -- Support: https://access.redhat.com/support
+> -- 
+> -- Unit UNIT has begun starting up.
+> Jan 21 19:12:25 rheledge.acme.es podman[3927]: 35668bc8ab37c5c8e3b5df2487d6c737d04c4fc6ac68df9661116cde072914e7
+> Jan 21 19:12:26 rheledge.acme.es systemd[918]: Started Podman container-httpd.service.
+> -- Subject: Unit UNIT has finished start-up
+> -- Defined-By: systemd
+> -- Support: https://access.redhat.com/support
+> -- 
+> -- Unit UNIT has finished starting up.
+> -- 
+> -- The start-up result is done.
+> Jan 21 19:12:26 rheledge.acme.es systemd[918]: Started container-httpd-proxy.service.
+> -- Subject: Unit UNIT has finished start-up
+> -- Defined-By: systemd
+> -- Support: https://access.redhat.com/support
+> -- 
+> -- Unit UNIT has finished starting up.
+> -- 
+> -- The start-up result is done.
+> ...
+> [core@rheledge ~]$
+> ```
+
+> ![HOMEWORK](icons/homework-icon.png) Use **skopeo** to check that the versions tagged as **prod** and **v2** in the registry are the same and different for the version tagged as **v1**.

@@ -61,7 +61,7 @@ If we check the containers that are running now we can see that there is one con
 ```console
 [core@rheledge ~]$ podman container list
 CONTAINER ID  IMAGE                          COMMAND               CREATED         STATUS             PORTS                   NAMES
-1f4cc91a333f  192.168.1.222:5000/httpd:prod  /usr/sbin/httpd -...  4 minutes ago  Up 4 minutes ago  127.0.0.1:8080->80/tcp  httpd       
+eccd21c507e4  192.168.1.222:5000/httpd:prod  /usr/sbin/httpd -...  4 minutes ago  Up 4 minutes ago  127.0.0.1:8080->80/tcp  httpd       
 [core@rheledge ~]$ 
 ```
 
