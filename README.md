@@ -30,5 +30,6 @@ To enjoy the workshop follow these steps:
 4. [Prepare the hypervisor](04-requirements-hypervisor.md)
 5. [Deploy a RHEL for Edge server](05-deploying-rhel-for-edge.md)
 6. [Deploy a serverless containerized application on top of the RHEL for Edge server](06-deploying-serverless-application.md)
+7. [Upgrading the serverless containerized application](07-upgrading-the-application.md)
 
 [Do you dare?](do-you-dare.md)
