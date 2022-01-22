@@ -273,6 +273,18 @@ EOF
 /usr/bin/chmod 0644 /etc/sudoers.d/core
 /usr/bin/chown root. /etc/sudoers.d/core
 /usr/bin/chcon -t etc_t /etc/sudoers.d/core
+
+# public key configuration for core user
+/usr/bin/mkdir -p /var/home/core/.ssh
+/usr/bin/chmod 0700 /var/home/core/.ssh
+
+cat << EOF > /var/home/core/.ssh/authorized_keys
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCccOztL5bzHEacvfK5QbB14AX07JnBKGn5B51CdGmu+FaVOd9zlbkphMfDuwoLJ6fn7DZPEWBHkKwT/a8JdYAmyUKqKV8smhyjHr7z04HhFwN8n7ItGaE3JTz6ZH7jKCwgUEpRlPe487cM3SGhpDUrC8oejsanA2Z2Dx1yVLYUuh1P1v83K46KrASu7QSdFhqF1XkYKKKqfyUxr4lb9EKv9xEMUYtY8zBk4x+ImL6jdc4oi/E4+taSM7KOqtGAMhRKTUVOG+g5z9MZwkKF6DsddWBt0wFg1NLP9MJcQe7v6Ni/RIFsAhgxjbdSB3UGN1x+tAu59sGUuVaFIePqyfzXCSrKp1e6YrfOVlYM5LJmT+heeLLSnkUNWp68+MLrWfztmA62oVIM8hFnUinfNI6VuXJY/R0UUeamWwMrRu8T8xs/mPpwXQRj5PscJgm1SHxve1Dr02S/65bJzMnFYy8jtNsxqdUER66Zt/AfFlRhklnMMs1okwqyifXaU3beF7huXRAJYwG7PzNuObfDGmjpySSLLLm8kUdPShT6HXgX+Sn70e/FWroPfRpIZssVlqaDtUtvI+KlSarq8auyrGTcC2UN2zsjSw80Z0YdT0Sm6kPdHqgkZLINTu2r0Mrz1V210YXvzJXUEwTVRQJujTwU4/8UcZdZIh9jPQa98IV/hQ== jadebustos@archimedes.jadbp.lab
+EOF
+
+/usr/bin/chmod 0644 /var/home/core/.ssh/authorized_keys
+/usr/bin/chcon -Rt ssh_home_t /var/home/core/.ssh
+/usr/bin/chown -R core. /var/home/core/.ssh
 %end
 
 %post
@@ -297,12 +309,25 @@ cat > /etc/greenboot/check/required.d/01_check_upgrade.sh <<EOF
 # than the original commit
 #
 
+function get_commit () {
+  COMMITS=\$(rpm-ostree status | grep Commit | awk -F' ' '{ print \$2 }')
+  if [ \$(echo \$COMMITS | wc -w) -eq 1 ]
+  then
+    COMMIT=\$COMMITS
+  else
+    COMMIT=\$(echo \$COMMITS | awk '{print \$(NF)}')
+  fi
+  echo \$COMMIT
+}
+
+COMMIT=\$(get_commit)
+
 if [ ! -f /etc/greenboot/orig.txt ]
 then
-    rpm-ostree status | grep -A2 '^\*' | grep Commit > /etc/greenboot/orig.txt
+  echo \$COMMIT > /etc/greenboot/orig.txt
 fi
 
-rpm-ostree status | grep -A2 '^\*' | grep Commit > /etc/greenboot/current.txt
+echo \$COMMIT > /etc/greenboot/current.txt
 
 diff -s /etc/greenboot/orig.txt /etc/greenboot/current.txt
 EOF

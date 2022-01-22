@@ -2,6 +2,8 @@
 
 This workshop is based in [https://github.com/RedHatGov/RFESummit2021](https://github.com/RedHatGov/RFESummit2021).
 
+This workshop will also use playbooks from [https://github.com/MoyRivera/edge](https://github.com/MoyRivera/edge).
+
 This repository License not applies to the contents of the repository [https://github.com/RedHatGov/RFESummit2021](https://github.com/RedHatGov/RFESummit2021).
 
 This workshop is an introductory workshop to show how to use RHEL **Image Builder** feature to build, deploy and manage RHEL for Edge deployments.
