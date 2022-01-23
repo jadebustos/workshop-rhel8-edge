@@ -1,5 +1,8 @@
 ---
 
+# this playbook is a modified version.
+# the original playbook: https://github.com/MoyRivera/edge/blob/main/rhelUpgrade.yml
+
 - hosts: rheledge
   gather_facts: false
   vars:

@@ -38,3 +38,21 @@ Let's see how Greenboot is configured:
 * **/etc/greenboot/check/wanted.d** scripts within this directory should be successfully executed to consider the upgrade as successful. If not a rollback will not be performed.
 * **/etc/greenboot/green.d** scripts within this directory will be executed as part of a successful upgrade.
 * **/etc/greenboot/red.d** scripts within this directory will be executed as part of a failed upgrade (when there is a rollback).
+
+## Prerequisites for the upgrade
+
+Before proceeding to the Operating System upgrade we need to perform the following:
+
+* If you have follow the workshop you will have two RHEL for Edge images.
+* You need to get the **ostree-commit** value for the two images you have created. So you will have to modify the playbook [rhel_edge_upgrade.yaml](ansible/rhel_edge_upgrade.yaml) setting the **imageIDOrig** variable with the **ostree-commit** value for the first image an the **imageIDUpdated** variable with the value for the second image, the one which has the **strace** RPM package installed.
+* Go to the RHEL 8 Server and perform the following steps to publish the upgraded image:
+  ```console
+  [root@rhel8edge edgeimage]# composer-cli compose list
+  3096e960-2019-4575-ad4d-f3960026ec6b FINISHED edgeserver 0.0.2 edge-commit
+  5218497e-1e47-4b78-864d-691280fc65f9 FINISHED edgeserver 0.0.1 edge-commit
+  [root@rhel8edge edgeimage]# composer-cli compose image 3096e960-2019-4575-ad4d-f3960026ec6b
+  ...
+  [root@rhel8edge edgeimage]# rm -Rf /var/www/html/ostree/*
+  [root@rhel8edge edgeimage]# tar xf 3096e960-2019-4575-ad4d-f3960026ec6b-v2-commit.tar -C /var/www/html/ostree/ 
+  [root@rhel8edge edgeimage]# 
+  ```

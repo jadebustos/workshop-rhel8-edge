@@ -4,7 +4,7 @@ An Operating System with no application is useless.
 
 ## Checking the RHEL for Edge server
 
-When we deployed the RHEL for Edge we also deployed a containerized web application. This application is published in a non-secure registry in the RHEL 8 Server. If you connect to that server:
+When we deployed the RHEL for Edge we configured a systemd unit for the **core** user named `pre-pull-container-image.service` that pulls the container image **192.168.1.222:5000/httpd:prod** (this application is published in a non-secure registry in the RHEL 8 Server). If you connect to that server:
 
 ```console
 [root@rhel8edge ~]# podman images
