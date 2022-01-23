@@ -12,7 +12,7 @@ This playbook will deploy a virtual machine using the RHEL for Edge image we hav
 
 > ![TIP](icons/tip-icon.png) If we want to speed up the deployment we can connect to the virtual machine console and select the **Install Red Hat Enterprise Linux 8.5**. If not before deploying the server the iso will be checked and this will take more time.
 >
-> ![BOOT](imgs/rheledgeboot.png)
+> ![BOOT](imgs/rheledge-boot.png)
 
 > ![NOTE](icons/note-icon.png) Once the deployment has finished you can use ssh to connect to the RHEL for Edge server using the ip you configured together with the user **core** with password **edge**.
 
