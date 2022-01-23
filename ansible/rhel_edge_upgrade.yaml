@@ -7,7 +7,7 @@
     imageIDOrigString: "v1"
     imageIDUpdated: "7efbd62e2285847cc2738ab471a310d26fabe43a1d379831ec56730c098939ee"
     imageIDUpdatedString: "v2"
-    allowRollback: false
+    UpgradeSuccess: true
 
   tasks: 
 
@@ -28,7 +28,7 @@
         msg:
           - "Current OS version: {{ imageString }}"
     
-    - when: allowRollback == false
+    - when: UpgradeSuccess == true
       file:
         path: "/etc/greenboot/orig.txt"
         state: absent
@@ -37,7 +37,7 @@
     - name: "trying to upgrade {{ inventory_hostname }} OS"
       systemd:
         name: rpm-ostreed-automatic
-        state: stopped
+        state: started
       become: true
 
     - name: "waiting for {{ inventory_hostname }} up & running"

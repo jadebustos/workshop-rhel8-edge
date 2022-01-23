@@ -310,7 +310,7 @@ cat > /etc/greenboot/check/required.d/01_check_upgrade.sh <<EOF
 #
 
 function get_commit () {
-  COMMITS=\$(rpm-ostree status | grep Commit | awk -F' ' '{ print \$2 }')
+  COMMITS=\$(rpm-ostree status | grep Commit | head -n1 | awk -F' ' '{ print \$2}')
   if [ \$(echo \$COMMITS | wc -w) -eq 1 ]
   then
     COMMIT=\$COMMITS
