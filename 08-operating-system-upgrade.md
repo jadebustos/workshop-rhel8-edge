@@ -45,7 +45,7 @@ Before proceeding to the Operating System upgrade we need to perform the followi
 
 * If you have follow the workshop you will have two RHEL for Edge images.
 * You need to get the **ostree-commit** value for the two images you have created. So you will have to modify the playbook [rhel_edge_upgrade.yaml](ansible/rhel_edge_upgrade.yaml) setting the **imageIDOrig** variable with the **ostree-commit** value for the first image an the **imageIDUpdated** variable with the value for the second image, the one which has the **strace** RPM package installed.
-* Go to the RHEL 8 Server and perform the following steps to publish the upgraded image:
+* Go to the RHEL 8 Server and perform the following steps to make the upgraded image available for the upgrade:
   ```console
   [root@rhel8edge edgeimage]# composer-cli compose list
   3096e960-2019-4575-ad4d-f3960026ec6b FINISHED edgeserver 0.0.2 edge-commit
@@ -53,6 +53,21 @@ Before proceeding to the Operating System upgrade we need to perform the followi
   [root@rhel8edge edgeimage]# composer-cli compose image 3096e960-2019-4575-ad4d-f3960026ec6b
   ...
   [root@rhel8edge edgeimage]# rm -Rf /var/www/html/ostree/*
-  [root@rhel8edge edgeimage]# tar xf 3096e960-2019-4575-ad4d-f3960026ec6b-v2-commit.tar -C /var/www/html/ostree/ 
+  [root@rhel8edge edgeimage]# tar xf 3096e960-2019-4575-ad4d-f3960026ec6b-commit.tar -C /var/www/html/ostree/ 
   [root@rhel8edge edgeimage]# 
   ```
+
+## How the upgrade process and rollback has been implemented
+
+The RHEL for Edge server is configured in such way that when files **/etc/greenboot/orig.txt** and **/etc/greenboot/current.txt** have the same content the upgrade will be considered as failed:
+
+* **/etc/greenboot/check/required.d/01_check_upgrade.sh** check if file **/etc/greenboot/orig.txt** exists, if not the file is created with the **ostree-commit** for the running version. **/etc/greenboot/current.txt** is overwritten with the **ostree-commit** for the running version.
+
+  > ![INFORMATION](icons/information-icon.png) to allow the upgrade the file **/etc/greenboot/orig.txt** needs to be deleted.
+
+* **//usr/lib/systemd/system/rpm-ostreed-automatic.timer** systemd timer to periodically start the `rpm-ostreed-automatic.service` systemd  unit.
+* **//usr/lib/systemd/system/rpm-ostreed-automatic.service** systemd unit which downloads the new upgrade for the Operating System.
+* **/etc/systemd/system/applyupdate.timer** systemd timer to periodically start the `applyupdate.service` systemd unit.
+* **/etc/systemd/system/applyupdate.service** systemd unit which applies the upgrade and reboots the RHEL for Edge server.
+
+> ![INFORMATION](icons/information-icon.png) this is only for demo purposes to illustrate how upgrade/rollback are performed.. It is not inteded to be used in production.
