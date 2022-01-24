@@ -24,7 +24,7 @@ Follow these stesp:
   rheledge_gw: '192.168.1.1'
   rheledge_dns: '8.8.8.8'
   ```
-* Edit the inventory file [ansible/hosts](ansible/hosts) and configure the RHEL for Edge ip in the **rheledge** group:
+* Edit the inventory file [ansible/hosts](ansible/hosts) and configure the RHEL for Edge IP in the **rheledge** group:
 
   ```ini
   [rheledge]
