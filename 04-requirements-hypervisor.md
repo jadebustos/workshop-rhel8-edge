@@ -16,6 +16,7 @@ Follow these stesp:
 * SSH must be running and one user must be configured with passwordless sudo to be used by ansible.
 * Edit the [inventory file](ansible/hosts) and under inventory group **hypervisor** replace **192.168.1.200** by your hypervisor's IP. Configure the **ansible_user** accordingly, as well.
 * Edit the [group_vars/hypervisor.yaml](ansible/group_vars/hypervisor.yaml) file to configure the network for the RHEL for Edge server that will be deployed in the hypervisor using the RHEL for Edge image you have just created:
+  
   ```yaml
   rheledge_hostname: 'rheledge.acme.es'
   rheledge_ip: '192.168.1.134'
@@ -23,8 +24,15 @@ Follow these stesp:
   rheledge_gw: '192.168.1.1'
   rheledge_dns: '8.8.8.8'
   ```
+* Edit the inventory file [ansible/hosts](ansible/hosts) and configure the RHEL for Edge ip in the **rheledge** group:
+
+  ```ini
+  [rheledge]
+  192.168.1.134 ansible_user=core
+  ```
 * The **/tmp** filesystem must have at least twice of RHEL iso size free.
 * On your ansible controller node execute:
+  
   ```console
   $ ansible-playbook -i hosts -l hypervisor prerequisites_hypervisor.yaml
   ```

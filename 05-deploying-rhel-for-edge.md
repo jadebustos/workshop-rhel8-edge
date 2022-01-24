@@ -4,29 +4,6 @@ Before deploying the RHEL for Edge image configure the required data:
 
 * Edit the [ansible/group_vars/hypervisor.yaml](ansible/group_vars/hypervisor.yaml) file and configure:
 
-  * RHEL ISO path:
-
-    ```yaml
-    rhel_iso: '/opt/isos/rhel-8.5-x86_64-dvd.iso'
-    ```
-
-  * Nework configuration:
-
-    ```yaml
-    rheledge_hostname: 'rheledge.acme.es'
-    rheledge_ip: '192.168.1.134'
-    rheledge_netmask: '255.255.255.0'
-    rheledge_gw: '192.168.1.1'
-    rheledge_dns: '8.8.8.8'
-    ```
-
-  * Edit the inventory file [ansible/hosts](ansible/hosts) and configure the RHEL for Edge ip in the **rheledge** group:
-
-    ```ini
-    [rheledge]
-    192.168.1.134 ansible_user=core
-    ```
-
   * If needed configure the virtual machine data:
 
     ```yaml
