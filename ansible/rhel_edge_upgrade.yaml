@@ -56,6 +56,14 @@
         cmd: cat /etc/greenboot/orig.txt
       register: imageID
 
+    - when: imageID.stdout == imageIDOrig 
+      set_fact:
+        imageString: "{{ imageIDOrigString }}"
+
+    - when: imageID.stdout == imageIDUpdated 
+      set_fact:
+        imageString: "{{ imageIDUpdatedString }}"
+
     - when: imageID.stdout == imageIDOrig
       set_fact:
         imageString: "FAIL. Running version {{ imageIDOrigString }}"
