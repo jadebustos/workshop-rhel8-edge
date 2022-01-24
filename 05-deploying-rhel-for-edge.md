@@ -15,6 +15,8 @@ Before deploying the RHEL for Edge image configure the required data:
     ```
 
     > ![TIP](icons/tip-icon.png) If your KVM virtual machine is using a bridge to get the network you will only have to check that the bridge is named **bridge0**. If your KVM virtual machine is using a network named **mycustomnetwork** then you will need to configure the **rheledge_network** value to **network=mycustomnetwork**.
+  
+  * Configure a public key in the **core_authorized_pub_key** variable which will be used from your ansible controller node to access the RHEL for Edge server.
 
 Once we have the hypervisor configured, the RHEL for Edge image and the boot iso we are going to deploy a Virtual Machine using the RHEL for Edge image we have created.
 
