@@ -10,7 +10,7 @@
     imageIDOrigString: "v1"
     imageIDUpdated: "7efbd62e2285847cc2738ab471a310d26fabe43a1d379831ec56730c098939ee"
     imageIDUpdatedString: "v2"
-    UpgradeSuccess: false
+#    UpgradeSuccess: false
 
   tasks: 
 

@@ -6,7 +6,7 @@ A Fedora/RHEL/CentOS computer which with the capability to create Virtual Machin
 
 ## Hypervisor configuration (KVM under RHEL family)
 
-Follow these stesp:
+Follow these steps:
 
 * RHEL 8 iso must be present in the hypervisor. You must configure [hypevisor.yaml](ansible/group_vars/hypevisor.yaml) with the iso path:
 
