@@ -1,4 +1,4 @@
-# Workshop RHEL for Edge
+# Workshop Edge Computing with RHEL 8
 
 This workshop is based in [https://github.com/RedHatGov/RFESummit2021](https://github.com/RedHatGov/RFESummit2021).
 
@@ -8,7 +8,7 @@ This repository License not applies to the contents of the repository [https://g
 
 This workshop is an introductory workshop to show how to use RHEL **Image Builder** feature to build, deploy and manage RHEL for Edge deployments.
 
-You need to have knoledge about Linux and ansible.
+You need to have knowledge about Linux and ansible.
 
 > ![IMPORTANT](icons/important-icon.png) This workshop has been tested using Fedora 35 as hypervisor and ansible controller node.
 
